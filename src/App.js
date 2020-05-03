@@ -11,7 +11,7 @@ import Particles from 'react-particles-js';
 import Clarifai from 'clarifai';
 
 const app = new Clarifai.App({
-  apiKey: 'd31ac431680f47478c760f80dfec5230'
+  apiKey: 'API_KEY_HERE'
 });
 
 const ParticleOptions = {
@@ -24,6 +24,22 @@ const ParticleOptions = {
       }
     }
   }
+
+}
+
+const initialState = {
+  input: '',
+    imageURL: '',
+    box: {},
+    route: 'signIn',
+    isSignedIn: false,
+    user: {
+      id: '',
+      name: '',
+      email: '',
+      entries: 0,
+      joined: new Date()
+    }
 
 }
 
@@ -99,6 +115,7 @@ class App extends Component {
             .then(count => {
               this.setState(Object.assign(this.state.user, { entries: count}))
             })
+            .catch(console.log)
 
         }
         this.displayBox(this.calculateFaceLocation(response))
@@ -108,7 +125,7 @@ class App extends Component {
 
   onRouteChange = (route) => {
     if(route === 'signOut'){
-      this.setState({isSignedIn: false})
+      this.setState(initialState)
     }else if(route === 'home'){
       this.setState({isSignedIn: true})
     }
